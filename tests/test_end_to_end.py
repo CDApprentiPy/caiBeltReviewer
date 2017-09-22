@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from selenium import webdriver
 import unittest
 
-class SomeTest(unittest.TestCase):
+class EndToEnd(unittest.TestCase):
   def setUp(self):
     self.browser = webdriver.Chrome()
   
