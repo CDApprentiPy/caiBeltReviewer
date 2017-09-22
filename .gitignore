@@ -1,2 +1,8 @@
 # Compiled Python
 *.pyc
+
+# Database files
+db.sqlite3
+
+# Testing
+geckodriver.log
