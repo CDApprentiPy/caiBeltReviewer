@@ -15,25 +15,39 @@ class EndToEnd(unittest.TestCase):
     self.browser.get("http://localhost:8000")
     self.assertIn("Belt Reviewer", self.browser.title)
 
-# Presented with registration and login forms
+  # Presented with login form
+  def test_index_view_login_form_loads(self):
+    self.browser.get("http://localhost:8000")
+    element = self.browser.find_element_by_id("login-form")
+    self.assertTrue(element)
+    self.assertEqual(element.tag_name, "form")
 
-# User registers an account
+  # Presented with registration form
+  def test_index_view_registration_form_loads(self):
+    self.browser.get("http://localhost:8000")
+    element = self.browser.find_element_by_id("registration-form")
+    self.assertTrue(element)
+    self.assertEqual(element.tag_name, "form")
 
-# User is presented with a list of the latest three book reviews
+  # User registers an account
+  def test_user_can_register_new_account(self):
+    pass
 
-# User is also presented with a list of all books with reviews
+  # User is presented with a list of the latest three book reviews
 
-# User has the option to add a book review or logout
+  # User is also presented with a list of all books with reviews
 
-# User can add a book review
+  # User has the option to add a book review or logout
 
-# User is redirected to the book's review page after adding one
+  # User can add a book review
 
-# A book review has a rating, review text, and a time stamp
+  # User is redirected to the book's review page after adding one
 
-# User can view user profiles
+  # A book review has a rating, review text, and a time stamp
 
-# User can return home from user profile page, add book review page, view book review page
+  # User can view user profiles
+
+  # User can return home from user profile page, add book review page, view book review page
 
 if __name__ == "__main__":
   unittest.main()
