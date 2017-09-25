@@ -49,5 +49,9 @@ class EndToEnd(unittest.TestCase):
 
   # User can return home from user profile page, add book review page, view book review page
 
+  # User can log out
+
+  # User can log in
+
 if __name__ == "__main__":
   unittest.main()

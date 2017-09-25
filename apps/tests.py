@@ -1,6 +1,7 @@
 from django.urls import resolve
 from django.test import TestCase
 from django.http import HttpRequest
+from django.template.loader import render_to_string
 
 from books.views import index_page
 
@@ -10,9 +11,7 @@ class HomePage(TestCase):
     found = resolve("/")
     self.assertEqual(found.func, index_page)
   
-  def test_index_page_returns_html(self):
-    request = HttpRequest()
-    response = index_page(request)
+  def test_index_page_returns_correct_html(self):
+    response = self.client.get("/")
     html = response.content.decode("utf8")
-    self.assertTrue(html.startswith("<!DOCTYPE html>"))
-    self.assertTrue(html.endswith("</html>"))
+    self.assertTemplateUsed(response, "books/index.html")
