@@ -1,30 +1,38 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
 import unittest
 
 class EndToEnd(unittest.TestCase):
+  name = "Alice"
+  alias = "alice123"
+  email = "alice@123.com"
+  password = "thisIsAGreatPassword"
+
   def setUp(self):
     self.browser = webdriver.Chrome()
+    self.browser.get("http://localhost:8000")
   
   def tearDown(self):
     self.browser.quit()
 
   # Website loads
+  @unittest.skip("skip: test_html_loads")
   def test_html_loads(self):
-    self.browser.get("http://localhost:8000")
     self.assertIn("Belt Reviewer", self.browser.title)
 
   # Presented with login form
+  @unittest.skip("skip: test_index_view_login_form_loads")
   def test_index_view_login_form_loads(self):
-    self.browser.get("http://localhost:8000")
     element = self.browser.find_element_by_id("login-form")
     self.assertTrue(element)
     self.assertEqual(element.tag_name, "form")
 
   # Presented with registration form
+  @unittest.skip("skip: test_index_view_registration_form_loads")
   def test_index_view_registration_form_loads(self):
-    self.browser.get("http://localhost:8000")
     element = self.browser.find_element_by_id("registration-form")
     self.assertTrue(element)
     self.assertEqual(element.tag_name, "form")

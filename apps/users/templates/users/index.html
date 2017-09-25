@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Belt Reviewer</title>
   {% load static %}
-  <link rel="stylesheet" href="{% static "books/normalize.css" %}"/>
-  <link rel="stylesheet" href="{% static "books/skeleton.css" %}"/>
-  <link rel="stylesheet" href="{% static "books/styles.css" %}"/>
+  <link rel="stylesheet" href="{% static "users/normalize.css" %}"/>
+  <link rel="stylesheet" href="{% static "users/skeleton.css" %}"/>
+  <link rel="stylesheet" href="{% static "users/styles.css" %}"/>
 </head>
 <body>
   <div class="container">
@@ -21,7 +21,7 @@
       </div>
       <div class="six columns">
         <h2>Login</h2>
-        <form id="login-form" action="" method="POST">
+        <form id="login-form" action="{% url 'users:create' %}" method="POST">
           {% csrf_token %}
           <button type="submit" class="button-primary">Login</button>
         </form>

@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from apps.users import views as users_views
 
 urlpatterns = [
-    url(r'^', include('apps.books.urls', namespace='books')),
+    url(r'^$', users_views.index_page),
+    url(r'^user', include('apps.users.urls', namespace='users')),
+    url(r'^book', include('apps.books.urls', namespace='books')),
+    url(r'^author', include('apps.authors.urls', namespace='authors')),
+    url(r'^review', include('apps.reviews.urls', namespace='reviews')),
 ]
