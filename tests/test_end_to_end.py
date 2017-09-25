@@ -18,6 +18,7 @@ class EndToEnd(unittest.TestCase):
     self.browser.get(ROOT_URL)
   
   def tearDown(self):
+    self.browser.refresh()
     self.browser.quit()
 
   # Website loads
