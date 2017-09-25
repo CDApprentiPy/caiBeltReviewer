@@ -27,5 +27,6 @@ def create_user(request):
       email=form.cleaned_data["email"],
       password=form.cleaned_data["password"]
     )
+    return redirect(reverse("books:index_page"))
 
   return redirect(reverse("users:index_page"))

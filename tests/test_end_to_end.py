@@ -5,6 +5,8 @@ from selenium.webdriver.common.keys import Keys
 import time
 import unittest
 
+ROOT_URL = "http://localhost:8000"
+
 class EndToEnd(unittest.TestCase):
   name = "Alice"
   alias = "alice123"
@@ -13,25 +15,22 @@ class EndToEnd(unittest.TestCase):
 
   def setUp(self):
     self.browser = webdriver.Chrome()
-    self.browser.get("http://localhost:8000")
+    self.browser.get(ROOT_URL)
   
   def tearDown(self):
     self.browser.quit()
 
   # Website loads
-  @unittest.skip("skip: test_html_loads")
   def test_html_loads(self):
     self.assertIn("Belt Reviewer", self.browser.title)
 
   # Presented with login form
-  @unittest.skip("skip: test_index_view_login_form_loads")
   def test_index_view_login_form_loads(self):
     element = self.browser.find_element_by_id("login-form")
     self.assertTrue(element)
     self.assertEqual(element.tag_name, "form")
 
   # Presented with registration form
-  @unittest.skip("skip: test_index_view_registration_form_loads")
   def test_index_view_registration_form_loads(self):
     element = self.browser.find_element_by_id("registration-form")
     self.assertTrue(element)
@@ -39,7 +38,16 @@ class EndToEnd(unittest.TestCase):
 
   # User registers an account
   def test_user_can_register_new_account(self):
-    pass
+    form = self.browser.find_element_by_id("registration-form")
+    form.find_element_by_name("name").send_keys(self.__class__.name)
+    form.find_element_by_name("alias").send_keys(self.__class__.alias)
+    form.find_element_by_name("email").send_keys(self.__class__.email)
+    form.find_element_by_name("password").send_keys(self.__class__.password)
+    form.find_element_by_name("confirm").send_keys(self.__class__.password)
+    form.find_element_by_tag_name("button").click()
+    time.sleep(3)
+    # user should now be logged in
+    self.assertEqual(self.browser.current_url, ROOT_URL + "/books")
 
   # User is presented with a list of the latest three book reviews
 

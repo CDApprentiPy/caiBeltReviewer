@@ -13,7 +13,7 @@
     <div class="row">
       <div class="six columns">
         <h2>Register</h2>
-        <form id="registration-form" action="" method="GET">
+        <form id="registration-form" action="{% url 'users:create' %}" method="POST">
           {% csrf_token %}
           {{registration_form}}
           <button type="submit" class="button-primary">Register</button>
@@ -21,7 +21,7 @@
       </div>
       <div class="six columns">
         <h2>Login</h2>
-        <form id="login-form" action="{% url 'users:create' %}" method="POST">
+        <form id="login-form" action="" method="POST">
           {% csrf_token %}
           <button type="submit" class="button-primary">Login</button>
         </form>
