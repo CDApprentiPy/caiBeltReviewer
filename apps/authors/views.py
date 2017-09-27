@@ -5,5 +5,7 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 
-def index(request):
+# from .models import Author
+
+def create_author(request):
   pass

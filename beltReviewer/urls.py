@@ -19,8 +19,8 @@ from apps.users import views as users_views
 
 urlpatterns = [
     url(r'^$', users_views.index_page),
-    url(r'^users', include('apps.users.urls', namespace='users')),
-    url(r'^books', include('apps.books.urls', namespace='books')),
-    url(r'^authors', include('apps.authors.urls', namespace='authors')),
-    url(r'^reviews', include('apps.reviews.urls', namespace='reviews')),
+    url(r'^users/', include('apps.users.urls', namespace='users')),
+    url(r'^books/', include('apps.books.urls', namespace='books')),
+    url(r'^authors/', include('apps.authors.urls', namespace='authors')),
+    url(r'^reviews/', include('apps.reviews.urls', namespace='reviews')),
 ]
