@@ -22,9 +22,24 @@
     <div class="row">
       <div class="seven columns">
         <h2>Recent Book Reviews</h2>
+        <div id="book-reviews">
+          {% for review in reviews %}
+          <div class="review">
+            <h3 class="review-book"><a href="">{{review.book.title}}</a></h3>
+            <p class="review-rating">Rating: {{review.rating}}</p>
+            <p class="review-text"><a href="">{{review.user.alias}} says: {{review.text}}</a></p>
+            <p class="review-date">{{review.updated_at}}</p>
+          </div>
+          {% endfor %}
+        </div>
       </div>
       <div class="five columns">
         <h2>Books with Reviews</h2>
+        <div id="books">
+          {% for book in books %}
+          <a href="">{{book.title}}</a>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
