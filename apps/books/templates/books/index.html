@@ -11,7 +11,21 @@
 <body>
   <div class="container">
     <div class="row">
-      Welcome to the books page
+      <div class="nine columns">
+        <p><strong>Welcome, {{request.session.user_alias}}</strong></p>
+      </div>
+      <div class="three columns">
+        <a href="">Add Book and Review</a>
+        <a href="{% url 'users:logout' %}">Logout</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="seven columns">
+        <h2>Recent Book Reviews</h2>
+      </div>
+      <div class="five columns">
+        <h2>Books with Reviews</h2>
+      </div>
     </div>
   </div>
 </body>

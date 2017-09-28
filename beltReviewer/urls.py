@@ -18,7 +18,7 @@ from django.contrib import admin
 from apps.users import views as users_views
 
 urlpatterns = [
-    url(r'^$', users_views.index_page),
+    url(r'^$', users_views.index_page, name="home"),
     url(r'^users/', include('apps.users.urls', namespace='users')),
     url(r'^books/', include('apps.books.urls', namespace='books')),
     url(r'^authors/', include('apps.authors.urls', namespace='authors')),

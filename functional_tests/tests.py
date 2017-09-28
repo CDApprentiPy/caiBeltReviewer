@@ -51,6 +51,7 @@ class EndToEnd(unittest.TestCase):
   #   self.assertEqual(self.browser.current_url, ROOT_URL + "/books/")
 
   # User can log in
+  @unittest.skip("")
   def test_user_can_login(self):
     self.register_new_user()
     self.browser.get(ROOT_URL)

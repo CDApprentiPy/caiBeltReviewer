@@ -20,7 +20,7 @@ def index_page(request):
 
 # form processes
 class CreateUserView(View):
-  fail_template = "users:index_page"
+  fail_template = "home"
   success_template = "books:index_page"
   
   def get(self, request):
@@ -31,11 +31,12 @@ class CreateUserView(View):
     if form.is_valid():
       new_user = User.objects.validate_registration(form.cleaned_data)
       if new_user:
+        add_user_to_session(request, new_user)
         return redirect(reverse(self.success_template))
     return redirect(reverse(self.fail_template))
 
 class LoginUserView(View):
-  fail_template = "users:index_page"
+  fail_template = "home"
   success_template = "books:index_page"
 
   def get(self, request):
@@ -46,5 +47,20 @@ class LoginUserView(View):
     if form.is_valid():
       user = User.objects.validate_login(form.cleaned_data)
       if user:
+        add_user_to_session(request, user)
         return redirect(reverse(self.success_template))
     return redirect(reverse(self.fail_template))
+
+# non-form processes
+def logout(request):
+  remove_user_from_session(request)
+  return redirect(reverse("home"))
+
+# helper functions
+def add_user_to_session(request, user):
+  request.session["user_email"] = user.email
+  request.session["user_alias"] = user.alias
+
+def remove_user_from_session(request):
+  request.session["user_email"] = None
+  request.session["user_alias"] = None

@@ -34,11 +34,11 @@ class UserModel(TestCase):
 # Views
 class HomePage(TestCase):
   def test_root_url_resolves_to_index_page_view(self):
-    found = resolve(reverse("users:index_page"))
+    found = resolve(reverse("home"))
     self.assertEqual(found.func, index_page)
   
   def test_index_page_returns_correct_html(self):
-    response = self.client.get(reverse("users:index_page"))
+    response = self.client.get(reverse("home"))
     self.assertTemplateUsed(response, "users/index.html")
 
 # Routes
@@ -59,11 +59,11 @@ class RegistrationForm(TestCase):
     num_users = User.objects.filter(email=INVALID_USER["email"]).count()
     self.assertEqual(num_users, 0)
 
-class LoginForm(TestCase):
-  def test_invalid_login_redirects_to_users(self):
+class LoginAndLogout(TestCase):
+  def test_invalid_login_redirects_to_home(self):
     # login user that is not in the db
     response = self.client.post(reverse("users:login"), VALID_USER)
-    self.assertEqual(response["location"], reverse("users:index_page"))
+    self.assertEqual(response["location"], reverse("home"))
   
   def test_valid_login_redirects_to_books(self):
     # manually add user to test db
@@ -72,3 +72,29 @@ class LoginForm(TestCase):
     response = self.client.post(reverse("users:login"), VALID_USER)
     self.assertEqual(response["location"], reverse("books:index_page"))
   
+  def test_valid_login_adds_user_to_session(self):
+    # manually add user to test db
+    user = User.objects.validate_registration(VALID_USER)
+    # login user
+    response = self.client.post(reverse("users:login"), VALID_USER)
+    self.assertEqual(self.client.session["user_email"], VALID_USER["email"])
+    self.assertEqual(self.client.session["user_alias"], VALID_USER["alias"])
+
+  def test_logout_redirects_to_home(self):
+    # manually add user to test db
+    user = User.objects.validate_registration(VALID_USER)
+    # login user
+    login_response = self.client.post(reverse("users:login"), VALID_USER)
+    # logout user
+    logout_response = self.client.get(reverse("users:logout"))
+    self.assertEqual(logout_response["location"], reverse("home"))
+  
+  def test_logout_removes_user_from_session(self):
+    # manually add user to test db
+    user = User.objects.validate_registration(VALID_USER)
+    # login user
+    login_response = self.client.post(reverse("users:login"), VALID_USER)
+    # logout user
+    logout_response = self.client.get(reverse("users:logout"))
+    self.assertFalse(self.client.session["user_email"])
+    self.assertFalse(self.client.session["user_alias"])    
