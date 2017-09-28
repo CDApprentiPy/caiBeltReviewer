@@ -20,7 +20,7 @@
         {% endfor %}
         </ul>
         {% endif %}
-        <form id="registration-form" action="{% url 'users:create' %}" method="POST">
+        <form id="registration-form" action="{% url 'users:add' %}" method="POST">
           {% csrf_token %}
           {{registration_form}}
           <button type="submit" class="button-primary">Register</button>
@@ -28,7 +28,7 @@
       </div>
       <div class="six columns">
         <h2>Login</h2>
-        <form id="login-form" action="" method="POST">
+        <form id="login-form" action="{% url 'users:login' %}" method="POST">
           {% csrf_token %}
           {{login_form}}
           <button type="submit" class="button-primary">Login</button>

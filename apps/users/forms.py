@@ -8,5 +8,5 @@ class RegistrationForm(forms.Form):
   confirm = forms.CharField(widget=forms.PasswordInput)
 
 class LoginForm(forms.Form):
-  name = forms.CharField(max_length=255)
+  email = forms.EmailField()
   password = forms.CharField(widget=forms.PasswordInput)

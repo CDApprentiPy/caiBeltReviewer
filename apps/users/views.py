@@ -33,3 +33,18 @@ class CreateUserView(View):
       if new_user:
         return redirect(reverse(self.success_template))
     return redirect(reverse(self.fail_template))
+
+class LoginUserView(View):
+  fail_template = "users:index_page"
+  success_template = "books:index_page"
+
+  def get(self, request):
+    return redirect(reverse(self.fail_template))
+  
+  def post(self, request):
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      user = User.objects.validate_login(form.cleaned_data)
+      if user:
+        return redirect(reverse(self.success_template))
+    return redirect(reverse(self.fail_template))

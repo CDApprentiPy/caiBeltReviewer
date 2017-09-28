@@ -5,12 +5,10 @@ from django.contrib import messages
 import bcrypt, re
 
 class UserManager(models.Manager):
-  EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$")
-
   def validate_registration(self, data):
     errors = {}
-    found_users = find_user_with_email(data["email"])
-    if len(found_users):
+    user = find_user_with_email(data["email"])
+    if user:
       errors["email_taken"] = "That email has already been used to register an account."
     if data["password"] != data["confirm"]:
       errors["confirm_password"] = "Passwords must match."
@@ -18,8 +16,22 @@ class UserManager(models.Manager):
     if not errors:
       return create_user(data)
     else:
-      # add errors to messages
+      print "ERRORS:", errors
+      # TODO: add errors to messages
       return None
+  
+  def validate_login(self, data):
+    errors = {}
+    user = find_user_with_email(data["email"])
+    if user:
+      if is_valid_password(data["password"], user.password):
+        return user
+      else:
+        errors["incorrect_password"] = "Password is incorrect."
+    else:
+      errors["unknown_user"] = "A user with that email was not found."
+    # TODO: add errors to messages
+    return None
 
 class User(models.Model):
   objects = UserManager()
@@ -47,7 +59,13 @@ def create_user(data):
   )
 
 def find_user_with_email(email):
-  return User.objects.filter(email=email)
+  try:
+    return User.objects.get(email=email)
+  except:
+    return None
 
 def encrypt_password(password):
   return bcrypt.hashpw(str(password).encode(), bcrypt.gensalt())
+
+def is_valid_password(inputPW, encryptedPW):
+  return bcrypt.checkpw(str(inputPW).encode(), str(encryptedPW).encode())
