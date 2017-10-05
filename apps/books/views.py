@@ -18,3 +18,7 @@ def index_page(request):
     }
     return render(request, "books/index.html", context)
   return redirect("home")
+
+def details(request, id):
+  print "ID:", id
+  return render(request, "books/book.html")
